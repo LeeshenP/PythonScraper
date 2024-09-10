@@ -50,29 +50,22 @@ def fetch_webpage(url):
 
 def extract_text_from_html(html_content):
     """
-    Extract readable text from the main content section of a Wikipedia page.
-    Returns a string containing all the text in the main content.
+    Extract readable text from the raw HTML content using BeautifulSoup.
+    Returns a string containing all the text in the page.
     """
     soup = BeautifulSoup(html_content, 'html.parser')
 
-    # Restrict text extraction to the main content section of Wikipedia (class 'mw-parser-output')
-    main_content = soup.find('div', {'class': 'mw-parser-output'})
-    
-    if not main_content:
-        return ''
-
-    # Remove irrelevant content like scripts, styles, and hidden elements
-    for script in main_content(["script", "style", "sup", "table"]):
+    # Remove scripts, styles, and other irrelevant content
+    for script in soup(["script", "style"]):
         script.decompose()
 
-    # Get the readable text from the main content
-    text = main_content.get_text(separator=' ')
+    # Get the readable text from the page
+    text = soup.get_text(separator=' ')
 
     # Clean up and normalize spaces
     text = re.sub(r'\s+', ' ', text).strip()
 
     return text
-
 
 def count_keyword_occurrences(text, keywords):
     """
