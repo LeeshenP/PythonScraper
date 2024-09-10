@@ -17,4 +17,4 @@ htmlcov/
 *.pyo
 
 # Environment-specific files
-.env
+.envg
