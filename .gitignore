@@ -1,0 +1,20 @@
+# Ignore virtual environments
+venv/
+__pycache__/
+
+# Byte-compiled / optimized / DLL files
+*.py[cod]
+
+# Test coverage files
+htmlcov/
+.tox/
+.coverage
+
+# Python-specific log files and directories
+*.log
+*.pot
+*.pyc
+*.pyo
+
+# Environment-specific files
+.env
