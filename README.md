@@ -29,7 +29,7 @@ This script takes user input keywords and scrapes a given website to count the o
    ```bash
    cd src/
    python app.py
-
+```
 - type the following url in your broswer
    ```bash
    http://127.0.0.1:5000/
@@ -38,7 +38,7 @@ This script takes user input keywords and scrapes a given website to count the o
 - At the moment, there is a simple, manual test script that will be updated periodically to test:
    ```bash
    python -m unittest discover tests/
-```
+
 ## Additional Notes
 - It is recommended to use a Python venv to ensure no library or dependecy conflicts with other projects
 - If there is port in use error when re-running the app please do the following
