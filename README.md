@@ -18,7 +18,9 @@ This script takes user input keywords and scrapes a given website to count the o
    pip install -r requirements.txt
 
 ## Additional Notes
-- At the moment there is no script test but one can be created using locally made static webpages for automated testing
+- At the moment there is a simple, manual test script that will be updated periodically to test:
+  ```bash
+   python -m unittest discover tests/ 
 - It is recommended to use a Python venv to ensure no library or dependecy conflicts with other projects
 - Selenium could be used in place of beautifulsoup4 in order to work with a headless browser (drivers needed for Chrome, Edge, Firefox respectively)
   in order to better scrape JavaScript heavy websites.
