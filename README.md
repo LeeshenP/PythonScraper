@@ -5,7 +5,7 @@ This script takes user input keywords and scrapes a given website to count the o
 
 ## Requirements
 - Python 3.x
-- Libraries: requests, beautifulsoup4
+- Libraries: requests, beautifulsoup4, flask
 
 ## Installation
 
@@ -17,10 +17,34 @@ This script takes user input keywords and scrapes a given website to count the o
    ```bash
    pip install -r requirements.txt
 
+3. If using a virtual environment (recommended), activate it
+   ```bash
+   # On macOS/Linux
+   source venv/bin/activate
+
+   # On Windows
+   venv\Scripts\activate
+
+## Running the Flask Web Interface
+   ```bash
+   cd src/
+   python app.py
+
+- type the following url in your broswer
+   ```bash
+   http://127.0.0.1:5000/
+
+## Testing
+- At the moment, there is a simple, manual test script that will be updated periodically to test:
+   ```bash
+   python -m unittest discover tests/
+```
 ## Additional Notes
-- At the moment there is a simple, manual test script that will be updated periodically to test:
-  ```bash
-   python -m unittest discover tests/ 
 - It is recommended to use a Python venv to ensure no library or dependecy conflicts with other projects
+- If there is port in use error when re-running the app please do the following
+   ```bash
+   lsof -i :5000
+   # locate <PID>
+   kill -9 <PID>
 - Selenium could be used in place of beautifulsoup4 in order to work with a headless browser (drivers needed for Chrome, Edge, Firefox respectively)
   in order to better scrape JavaScript heavy websites.

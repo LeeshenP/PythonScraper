@@ -1,0 +1,74 @@
+/* Background: soft gradient hues of blue, purple, red, yellow */
+body {
+    background: linear-gradient(120deg, #a1c4fd, #c2e9fb, #fbc2eb, #a18cd1, #fbc2eb);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    color: #333;
+    padding: 20px;  /* Adjusted for spacing around the content */
+}
+
+/* Styling for the headings and form labels */
+h1, label {
+    font-weight: bold;
+    color: #000;  /* Black color */
+    text-align: left;
+    margin-bottom: 5px;  /* Smaller margin below */
+}
+
+/* Form input styling */
+.form-control {
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px; /* Space between input and next section */
+}
+
+/* Submit button styling */
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+/* Results styling: Larger keywords and numbers */
+.result-list li {
+    font-size: 24px;  /* Larger font size for keywords */
+    padding: 15px;
+    font-weight: bold;
+    background-color: transparent;  /* No background */
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.number {
+    font-size: 36px;  /* Larger font size for numbers */
+    font-weight: bold;
+    color: #333;
+}
+
+/* Number animation: cycling effect */
+.number-cycle {
+    animation: numberSpin 2s ease-in-out infinite;
+}
+
+@keyframes numberSpin {
+    0% { content: "0"; }
+    25% { content: "5"; }
+    50% { content: "8"; }
+    75% { content: "3"; }
+    100% { content: "0"; }
+}
