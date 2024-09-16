@@ -1,6 +1,16 @@
 import re
 import requests
 from bs4 import BeautifulSoup
+import logging
+import time
+
+# Configure logging
+logging.basicConfig(filename='scraper.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+# Retry settings
+MAX_RETRIES = 3
+TIMEOUT = 10  # seconds
+
 
 def get_valid_url():
     """
@@ -15,6 +25,7 @@ def get_valid_url():
             return url
         else:
             print("Invalid URL format. Please enter a valid URL.")
+            logging.warning("Invalid URL entered by user.")
 
 
 def get_valid_keywords():
@@ -32,20 +43,32 @@ def get_valid_keywords():
             return keywords
         else:
             print("No valid keywords or phrases entered. Please try again.")
+            logging.warning("No valid keywords entered by user.")
 
 
 def fetch_webpage(url):
     """
     Fetch the webpage content from the given URL.
-    Returns the raw HTML content of the page.
+    Implements retry and timeout logic to handle transient errors.
+    Returns the raw HTML content of the page or None if it fails.
     """
-    try:
-        response = requests.get(url)
-        response.raise_for_status()  # Raise an error for bad status codes
-        return response.text
-    except requests.exceptions.RequestException as e:
-        print(f"Error fetching the URL: {e}")
-        return None
+    retries = 0
+    while retries < MAX_RETRIES:
+        try:
+            response = requests.get(url, timeout=TIMEOUT)
+            response.raise_for_status()  # Raise an error for bad status codes
+            logging.info(f"Successfully fetched URL: {url}")
+            return response.text
+        except requests.exceptions.Timeout:
+            retries += 1
+            logging.warning(f"Timeout fetching URL {url}. Retrying {retries}/{MAX_RETRIES}...")
+            time.sleep(1)  # Wait before retrying
+        except requests.exceptions.RequestException as e:
+            logging.error(f"Error fetching URL: {url} - {e}")
+            break  # Do not retry on non-timeout errors
+
+    print(f"Failed to fetch the URL after {MAX_RETRIES} retries.")
+    return None
 
 
 def extract_text_from_html(html_content):
@@ -66,6 +89,7 @@ def extract_text_from_html(html_content):
     text = re.sub(r'\s+', ' ', text).strip()
 
     return text
+
 
 def count_keyword_occurrences(text, keywords):
     """
@@ -100,3 +124,5 @@ if __name__ == "__main__":
         for keyword, count in keyword_counts.items():
             print(f"'{keyword}': {count} occurrence(s)")
 
+        # Log the keyword counts
+        logging.info(f"Keyword counts for URL {url}: {keyword_counts}")
