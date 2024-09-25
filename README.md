@@ -25,14 +25,20 @@ This script takes user input keywords and scrapes a given website to count the o
    # On Windows
    venv\Scripts\activate
 
-## Running the Flask Web Interface
+## Running the Flask Back-end
    ```bash
    cd src/
    python app.py
 ```
-- type the following url in your broswer
+## Running the React Front-end
    ```bash
-   http://127.0.0.1:5000/
+   cd client/
+   npm install
+   npm start
+```
+## Ports Used
+   -  React front-end will run on http://localhost:3000/
+   -  Flask will run on http://127.0.0.1:5000/.
 
 ## Testing
 - At the moment, there is a simple, manual test script that will be updated periodically to test:
