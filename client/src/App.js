@@ -6,7 +6,7 @@ function App() {
   const [url, setUrl] = useState('');
   const [keywords, setKeywords] = useState('');
   const [results, setResults] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);  // Manage loading state
   const [error, setError] = useState('');
 
   const validateForm = () => {
@@ -47,7 +47,7 @@ function App() {
       return; // Prevent submitting if form is invalid
     }
 
-    setLoading(true);
+    setLoading(true);  // Set loading to true
 
     try {
       const response = await axios.post('http://127.0.0.1:5000/api/scrape', {
@@ -56,7 +56,7 @@ function App() {
       });
 
       setResults(response.data.keyword_counts);
-      setLoading(false);
+      setLoading(false);  // Set loading to false when done
     } catch (error) {
       if (error.response && error.response.status === 400) {
         setError(error.response.data.error);
@@ -65,7 +65,7 @@ function App() {
       } else {
         setError('An unknown error occurred. Please check your connection or try again later.');
       }
-      setLoading(false);
+      setLoading(false);  // Set loading to false on error
     }
   };
 
@@ -76,7 +76,7 @@ function App() {
         <div>
           <label>Site to be Scraped:</label>
           <input
-            type="text"  // Change type from 'url' to 'text' for custom validation
+            type="text"
             value={url}
             onChange={(e) => setUrl(e.target.value)}
             placeholder="Enter website URL"
@@ -95,6 +95,9 @@ function App() {
           {loading ? 'Scraping...' : 'Scrape Website'}
         </button>
       </form>
+
+      {/* Display spinner while loading */}
+      {loading && <div className="spinner"></div>}
 
       {error && <p style={{ color: 'red' }}>{error}</p>}
 
