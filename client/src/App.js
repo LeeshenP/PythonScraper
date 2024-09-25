@@ -9,21 +9,62 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  const validateForm = () => {
+    if (!url) {
+      setError('Please enter a valid URL');
+      return false;
+    }
+
+    if (!keywords || keywords.trim() === '') {
+      setError('Please enter at least one keyword');
+      return false;
+    }
+
+    // Simple URL validation (you can enhance this if needed)
+    const urlPattern = new RegExp(
+      '^(https?:\\/\\/)?' + // protocol
+      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|' + // domain name
+      '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+      '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+      '(\\#[-a-z\\d_]*)?$', 'i' // fragment locator
+    );
+    
+    if (!urlPattern.test(url)) {
+      setError('Please enter a valid URL');
+      return false;
+    }
+
+    return true;
+  };
+
   const handleScrape = async (e) => {
     e.preventDefault();
+    setError(''); // Clear any previous error
+    setResults(null); // Clear previous results
+
+    if (!validateForm()) {
+      return; // Prevent submitting if form is invalid
+    }
+
     setLoading(true);
-    setError('');
-    setResults(null);
 
     try {
       const response = await axios.post('http://127.0.0.1:5000/api/scrape', {
         url,
         keywords: keywords.split(',').map(keyword => keyword.trim())
       });
+
       setResults(response.data.keyword_counts);
       setLoading(false);
     } catch (error) {
-      setError('Failed to scrape the website. Please try again.');
+      if (error.response && error.response.status === 400) {
+        setError(error.response.data.error);
+      } else if (error.response && error.response.status === 500) {
+        setError('Server error: Failed to scrape the website. Please try again later.');
+      } else {
+        setError('An unknown error occurred. Please check your connection or try again later.');
+      }
       setLoading(false);
     }
   };
@@ -35,11 +76,10 @@ function App() {
         <div>
           <label>Site to be Scraped:</label>
           <input
-            type="url"
+            type="text"  // Change type from 'url' to 'text' for custom validation
             value={url}
             onChange={(e) => setUrl(e.target.value)}
             placeholder="Enter website URL"
-            required
           />
         </div>
         <div>
@@ -49,7 +89,6 @@ function App() {
             value={keywords}
             onChange={(e) => setKeywords(e.target.value)}
             placeholder="Enter keywords (comma-separated)"
-            required
           />
         </div>
         <button type="submit" disabled={loading}>
