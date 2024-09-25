@@ -1,30 +1,30 @@
-from flask import Flask, render_template, request
+from flask import Flask, request, jsonify
 from scraper import fetch_webpage, extract_text_from_html, count_keyword_occurrences
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
-@app.route('/', methods=['GET', 'POST'])
-def index():
-    if request.method == 'POST':
-        url = request.form['url']
-        keywords = request.form['keywords'].split(',')
+@app.route('/api/scrape', methods=['POST'])
+def scrape():
+    data = request.get_json()
+    url = data.get('url')
+    keywords = data.get('keywords')
 
-        # Fetch the webpage content
-        html_content = fetch_webpage(url)
-        if html_content:
-            # Extract text from the HTML content
-            page_text = extract_text_from_html(html_content)
+    if not url or not keywords:
+        return jsonify({'error': 'Invalid input'}), 400
 
-            # Count keyword occurrences
-            keyword_counts = count_keyword_occurrences(page_text, keywords)
+    html_content = fetch_webpage(url)
+    if html_content:
+        page_text = extract_text_from_html(html_content)
+        keyword_counts = count_keyword_occurrences(page_text, keywords)
+        return jsonify({'keyword_counts': keyword_counts}), 200
 
-            return render_template('index.html', keyword_counts=keyword_counts, url=url, keywords=keywords)
-
-    return render_template('index.html')
-
+    return jsonify({'error': 'Failed to scrape the website'}), 500
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    app.run(debug=True)
+
 # lsof -i :5000
 # kill -9 <PID>
 # http://127.0.0.1:5000/

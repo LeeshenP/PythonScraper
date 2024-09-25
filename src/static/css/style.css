@@ -1,21 +1,36 @@
-/* Background: soft gradient hues of blue, purple, red, yellow */
+/* Background: soft gradient hues of blue, purple, red, yellow, animated */
 body {
     background: linear-gradient(120deg, #a1c4fd, #c2e9fb, #fbc2eb, #a18cd1, #fbc2eb);
+    background-size: 400% 400%;  /* To make the background larger than the viewport, allowing for animation */
+    animation: gradientFlow 15s ease infinite;  /* Animation applied, runs infinitely and slowly */
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     font-family: Arial, sans-serif;
     color: #333;
-    padding: 20px;  /* Adjusted for spacing around the content */
+    padding: 20px;
+}
+
+/* Gradient animation */
+@keyframes gradientFlow {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
 /* Styling for the headings and form labels */
 h1, label {
     font-weight: bold;
-    color: #000;  /* Black color */
+    color: #000;
     text-align: left;
-    margin-bottom: 5px;  /* Smaller margin below */
+    margin-bottom: 5px;
 }
 
 /* Form input styling */
@@ -24,7 +39,7 @@ h1, label {
     padding: 10px;
     font-size: 16px;
     border: 1px solid #ccc;
-    margin-bottom: 20px; /* Space between input and next section */
+    margin-bottom: 20px;
 }
 
 /* Submit button styling */
@@ -44,10 +59,10 @@ h1, label {
 
 /* Results styling: Larger keywords and numbers */
 .result-list li {
-    font-size: 24px;  /* Larger font size for keywords */
+    font-size: 24px;
     padding: 15px;
     font-weight: bold;
-    background-color: transparent;  /* No background */
+    background-color: transparent;
     margin-bottom: 15px;
     display: flex;
     justify-content: space-between;
@@ -55,9 +70,9 @@ h1, label {
 }
 
 .number {
-    font-size: 36px;  /* Larger font size for numbers */
+    font-size: 36px;
     font-weight: bold;
-    color: #333;
+    color: #007bff;
 }
 
 /* Number animation: cycling effect */
