@@ -41,9 +41,9 @@ This script takes user input keywords and scrapes a given website to count the o
    -  Flask will run on http://127.0.0.1:5000/.
 
 ## Testing
-- At the moment, there is a simple, manual test script that will be updated periodically to test:
+- At the moment, there is a simple, test script for flask that can be run from root:
    ```bash
-   python -m unittest discover tests/
+   pytest
 
 ## Additional Notes
 - It is recommended to use a Python venv to ensure no library or dependecy conflicts with other projects
