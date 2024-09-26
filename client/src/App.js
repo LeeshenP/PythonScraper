@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import './App.css';
+import axios from 'axios';
+
 
 function App() {
   const [registerUsername, setRegisterUsername] = useState('');
   const [registerPassword, setRegisterPassword] = useState('');
   const [loginUsername, setLoginUsername] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
-  
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [token, setToken] = useState('');
   const [error, setError] = useState('');
@@ -26,7 +26,7 @@ function App() {
     setMessage('');
 
     try {
-      const response = await axios.post('http://127.0.0.1:5000/api/register', {
+      await axios.post('http://127.0.0.1:5000/api/register', {
         username: registerUsername,
         password: registerPassword,
       });
@@ -107,8 +107,8 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <h1>User Authentication and Scraper</h1>
+    <div className="container">
+      <h1>WebScraper</h1>
 
       {!isAuthenticated ? (
         <>
@@ -180,22 +180,23 @@ function App() {
           {/* Display loading spinner while loading */}
           {loading && <div className="spinner"></div>}
 
-          {/* Log Out Button */}
-          <button onClick={handleLogout}>Log Out</button>
-
           {/* Display results */}
           {results && (
             <div>
               <h2>Results:</h2>
-              <ul>
+              <ul className="results-list">
                 {Object.entries(results).map(([keyword, count]) => (
-                  <li key={keyword}>
-                    {keyword}: {count}
+                  <li key={keyword} className="result-item">
+                    <span className="keyword">{keyword}</span>
+                    <span className="count">{count}</span>
                   </li>
                 ))}
               </ul>
             </div>
           )}
+
+          {/* Log Out Button */}
+          <button onClick={handleLogout}>Log Out</button>
         </div>
       )}
 

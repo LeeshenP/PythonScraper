@@ -1,21 +1,84 @@
-.App {
-  text-align: center;
-}
-
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Gradient Background */
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  background: linear-gradient(135deg, #e66465, #9198e5);  /* Adjust the gradient as needed */
+  background-size: 200% 200%;  /* To make the background larger than the viewport, allowing for animation */
+  animation: gradientFlow 5s ease infinite;  /* Animation applied, runs infinitely and slowly */
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  font-family: Arial, sans-serif;
 }
 
-.App-link {
-  color: #61dafb;
+/* Gradient animation */
+@keyframes gradientFlow {
+  0% {
+      background-position: 0% 50%;
+  }
+  50% {
+      background-position: 100% 50%;
+  }
+  100% {
+      background-position: 0% 50%;
+  }
+}
+
+/* Center the container and add spacing */
+.container {
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Styling for headers */
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  color: #555;
+}
+
+/* Input styles */
+input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+/* Button styles */
+button {
+  background-color: #333;
+  color: white;
+  padding: 10px 20px;
+  margin: 15px 0;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #555;
+}
+
+/* Spacing for error/success messages */
+p {
+  margin-top: 10px;
+  font-size: 1rem;
 }
 
 /* Loading Spinner */
@@ -35,3 +98,45 @@
   }
 }
 
+/* Results styling */
+.results-list {
+  list-style-type: none;  /* Remove bullet points */
+  padding: 0;
+  margin: 0;
+}
+
+.result-item {
+  display: flex;
+  justify-content: space-between;  /* Aligns keyword left and count right */
+  padding: 8px 0;
+  border-bottom: 1px solid #ccc;  /* Optional: Adds a line between results */
+}
+
+.keyword {
+  font-weight: bold;
+  text-transform: capitalize;  /* Optional: Capitalizes the keyword */
+}
+
+.count {
+  color: #333;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  body {
+    padding: 20px;
+  }
+
+  .container {
+    width: 100%;
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+}
